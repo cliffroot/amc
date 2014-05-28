@@ -1,0 +1,4 @@
+class Manufacturer < ActiveRecord::Base
+  attr_accessible :formula, :name, :rules
+  has_many :products
+end

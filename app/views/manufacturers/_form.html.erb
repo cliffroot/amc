@@ -1,0 +1,25 @@
+<%= form_for(@manufacturer) do |f| %>
+  <% if @manufacturer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@manufacturer.errors.count, "error") %> prohibited this manufacturer from being saved:</h2>
+
+      <ul>
+      <% @manufacturer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label 'Имя' %><br />
+    <%= f.text_field :name %>
+  </div>
+   <div class="field">
+    <%= f.label 'Имя' %><br />
+    <%= f.label Distributor.find(@manufacturer.distributor_id).name %>
+  </div>
+  <div class="actions" style="margin-top: 10px;">
+    <%= f.submit "Сохранить"%>
+  </div>
+<% end %>

@@ -1,0 +1,126 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  height:100%;margin:0; background: #000010;
+}
+
+
+ul
+{
+  padding-left: 0px;
+}
+
+ul > li 
+{
+  display:inline;
+  margin-left: 15px;
+  color: white;
+}
+
+#searchForm
+{
+  margin-top: 20px;
+}
+
+#uploadForm
+{
+  margin-top: 20px;
+}
+
+#mainContainer
+{
+  width:936px;
+  margin-right: auto;
+  margin-left: auto;
+  background: white;
+  min-height:700px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#content
+{
+  padding: 20px;
+}
+
+li > h2
+{
+  font-size: 16px;
+  display:inline;
+  display:inline;
+  margin: 0; 
+}
+
+li > h2 > a
+{
+  color: white;
+  text-decoration: none; 
+}
+
+
+#navbar
+{
+    background: #000080; 
+    padding: 1px;
+    border-radius: 5px;
+}
+
+#mainContent
+{
+    margin-top: 20px;
+    
+}
+
+li > form
+{
+
+  display: inline;
+  float: right;
+  margin-right: 20px;
+}
+
+input[type="submit"]
+{
+
+  z-index: 10;
+}
+
+.labelContainer
+{
+  width: 200px;
+  display: inline;
+  float: left;
+}
+
+.labelContainer > label
+{
+   
+}
+
+#additionalInformation
+{
+  margin-top: 20px;  
+}
+
+#notice
+{
+  color: green;
+}
+
+#searchResult
+{
+  font-size: 12px;
+}
+
+.green
+{
+  color: green;
+}
+
+.red
+{
+  color: red;
+}
+

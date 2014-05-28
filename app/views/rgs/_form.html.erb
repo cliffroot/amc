@@ -1,0 +1,29 @@
+<%= form_for(@rg) do |f| %>
+  <% if @rg.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rg.errors.count, "error") %> prohibited this rg from being saved:</h2>
+
+      <ul>
+      <% @rg.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :manufacturer %><br />
+    <%= f.text_field :manufacturer %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

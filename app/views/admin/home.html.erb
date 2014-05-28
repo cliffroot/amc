@@ -1,0 +1,20 @@
+<% if @distributorsCount > 0 %>
+<h2>Экспорт excel и csv</h2>
+<div id="uploadForm">
+<%= form_tag(products_path, remote: true, multipart: true) do %>
+  <div class="labelContainer"><label>Выберите файл</label></div><%= file_field_tag(:file) %><br>
+  <div class="labelContainer"><label>Выберите поставщика</label></div><%= collection_select(:distributor, :id, @distributors, :id, :name, options = {})%><br>
+  <div class="labelContainer"><label>Выберите направление</label></div> <%= select( "route", "id", { "Эмираты" => "UAE", "США" => "USA", "Европа" => "EU"}) %><br>
+  <div class="labelContainer"><label>Файл содержит заголовки</label></div> <%= check_box_tag(:headers) %><br>
+  <%= submit_tag("Загрузить") %>
+<%end%>
+</div>
+<div id="additionalInformation">
+	Количество деталей в БД: <%= @productsCount.to_s %>
+</div>
+<p id="notice"><%= notice %></p>
+</div>
+</div>
+<% else %>
+<h3> Для начала работы,  <%= link_to 'добавьте поставщика', new_distributor_path %> </h3>
+<% end %>

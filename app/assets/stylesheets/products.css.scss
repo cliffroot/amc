@@ -1,0 +1,23 @@
+// Place all the styles related to the products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#searchResult > tbody > tr > td
+{
+	padding-left: 15px;
+	text-align: center; 
+}
+
+#searchResult > tbody > tr > td.desc
+{
+	width: 200px;
+}
+
+#searchResult > tbody > tr > th
+{
+	padding-left: 15px;
+}
+
+th:hover {
+	text-decoration:underline;
+}

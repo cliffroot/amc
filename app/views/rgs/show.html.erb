@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Manufacturer:</b>
+  <%= @rg.manufacturer %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @rg.code %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @rg.value %>
+</p>
+
+
+<%= link_to 'Edit', edit_rg_path(@rg) %> |
+<%= link_to 'Back', rgs_path %>

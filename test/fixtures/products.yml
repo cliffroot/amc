@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  code: MyString
+  manufacturer: MyString
+  price: MyString
+  weight: MyString
+  amount: 1
+  description: MyText
+  date: 2013-02-08 16:07:39
+
+two:
+  code: MyString
+  manufacturer: MyString
+  price: MyString
+  weight: MyString
+  amount: 1
+  description: MyText
+  date: 2013-02-08 16:07:39

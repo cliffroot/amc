@@ -1,0 +1,20 @@
+<h2>Список поставщиков</h2>
+<table>
+  <tr>
+    <th>Имя</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @distributors.each do |distributor| %>
+  <tr>
+    <td><%= distributor.name %></td>
+    <td><%= link_to 'Редактировать', edit_distributor_path(distributor) %></td>
+    <td><%= link_to 'Удалить', distributor, method: :delete, data: { confirm: 'Вы уверены?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to 'Новый поставщик', new_distributor_path %>

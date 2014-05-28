@@ -1,0 +1,30 @@
+<table>
+	<td id="manForm">
+<h2>Редактировать поставщика</h2>
+
+<%= render 'form' %>
+<%= link_to 'Назад', distributors_path %>
+</td>
+	<td id="vars">
+<h2>Переменные</h2>
+<table>
+  <tr>
+    <th>Имя</th>
+    <th>Значение</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vars.each do |var| %>
+  <tr>
+    <td><%= var.name %></td>
+    <td><%= var.value %></td>
+    <td><%= link_to 'Редактировать', edit_var_path(var) %></td>
+    <td><%= link_to 'Удалить', var, method: :delete, data: { confirm: 'Вы уверены?' } %></td>
+  </tr>
+<% end %>
+</table>
+</td>
+
+</table>
+

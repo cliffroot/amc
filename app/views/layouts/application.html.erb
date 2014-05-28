@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AMC Search</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id = "mainContainer">
+	<div id = "content">
+	<div align="center">
+<a href = "/">
+<%= image_tag("rails_logo.jpg", :alt => "AMC Logo") %>
+</a>
+</div>
+<div id="navbar">
+<ul>
+	<li><h2><a href = "/">Главная</a></h2></li>
+	<li><h2>|</h2></li>
+	<li><h2><a href = "/distributors">Поставщики</a></h2></li>
+	<li><h2>|</h2></li>
+	<li><h2><a href = "/manufacturers">Произв.</a></h2></li>
+	<li><h2>|</h2></li>
+	<li><h2><a href = "/vars">Переменные</a></h2></li>
+	<li><h2>|</h2></li>
+	<li><h2><a href = "/rgs">RGs</a></h2></li>
+	<li>
+	<%= form_tag(products_path, :method => 'get') do %>
+   <!-- <%= text_field_tag :search, params[:search] %> -->
+   <!--		<%= text_area :search, params[:search] %> -->
+<textarea id="search" name="search" style="resize: none; margin: 0; margin-left: -170px; position: absolute;" data-role="none" rows = 1 cols = 16>  </textarea>
+    <%= submit_tag "Поиск", :name => nil %>
+    <input type = "button" value = "Спиcок" onClick="change()"/>
+<% end %>
+</li>
+</ul>
+</div>
+<div id="mainContent">
+<%= yield %>
+</div>
+<script type = "text/javascript">
+
+function change() {
+	document.getElementById('search').rows = Math.abs(document.getElementById('search').rows - 15);
+}
+</script>
+</body>
+</html>

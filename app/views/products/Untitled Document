@@ -1,0 +1,4 @@
+ <!-- <% if Rg.find(:first, :conditions => ["manufacturer = ? and code = ?", Manufacturer.find(product.manufacturer_id).name, product.rg]) != nil  %>
+        <%    delivery_price *= Rg.find(:first, :conditions => ["manufacturer = ? and code = ?", Manufacturer.find(product.manufacturer_id).name, product.rg]).first.value %>
+        <% end %>
+      -->

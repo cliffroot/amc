@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  formula_price: MyString
+  formula_del_eu: MyString
+  formula_del_uae: MyString
+  column_code: 1
+  column_price: 1
+  column_weight: 1
+  column_amount: 1
+  column_description: 1
+
+two:
+  name: MyString
+  formula_price: MyString
+  formula_del_eu: MyString
+  formula_del_uae: MyString
+  column_code: 1
+  column_price: 1
+  column_weight: 1
+  column_amount: 1
+  column_description: 1

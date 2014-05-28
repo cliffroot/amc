@@ -1,0 +1,57 @@
+<%= form_for(@distributor) do |f| %>
+  <% if @distributor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@distributor.errors.count, "error") %> prohibited this distributor from being saved:</h2>
+
+      <ul>
+      <% @distributor.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label 'Имя' %><br />
+    <%= f.text_field :name %>
+  </div>
+    <div class="field">
+    <%= f.label 'Формула для цены' %><br />
+    <%= f.text_field :formula_price %>
+  </div>
+  <div class="field">
+    <%= f.label "Формула доставки из ОАЭ" %><br />
+    <%= f.text_field :formula_del_uae%>
+  </div>
+  <div class="field">
+    <%= f.label "Формула доставки из Европы" %><br />
+    <%= f.text_field :formula_del_eu %>
+  </div>
+  <div class="field">
+    <%= f.label 'Колонка код' %><br />
+    <%= f.number_field :column_code %>
+  </div>
+  <div class="field">
+    <%= f.label "Колонка цена" %><br />
+    <%= f.number_field :column_price %>
+  </div>
+  <div class="field">
+    <%= f.label "Колонка вес" %><br />
+    <%= f.number_field :column_weight %>
+  </div>
+  <div class="field">
+    <%= f.label "Колонка количество" %><br />
+    <%= f.number_field :column_amount %>
+  </div>
+  <div class="field">
+    <%= f.label "Описание" %><br />
+    <%= f.number_field :column_description %>
+  </div>
+    <div class="field">
+    <%= f.label "PG" %><br />
+    <%= f.number_field :column_pg %>
+  </div>
+  <div class="actions" style="margin-top: 10px;">
+    <%= f.submit "Сохранить"%>
+  </div>
+<% end %>

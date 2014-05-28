@@ -1,0 +1,11 @@
+<h1>Коэффициенты</h1>
+
+<%= form_tag('/rgs/create', remote: true, multipart: true) do %>
+  <div class="labelContainer"><label>Выберите файл</label></div><%= file_field_tag(:file) %><br>
+
+  <%= submit_tag("Загрузить") %>
+<%end%>
+
+<br />
+
+

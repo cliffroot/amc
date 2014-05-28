@@ -1,0 +1,236 @@
+
+<% if ! (@products.length == 1 && @products[0].length == 1 && @products[0][0].id == -1) %>
+<table id="searchResult" cellpading=0 cellspacing=0>
+  <tr id="headers">
+    <th>Код</th>
+    <th id="1" onClick="sort(1);">Произв.</th>
+    <th id="2">Описание</th>
+    <th id="3" onClick="sort(3);">В валюте</th>
+    <th id="4" onClick="sort(4);">Доставка</th>
+    <th id="5" onClick="sort(5);">Цена</th>
+    <th id="6" onClick="sort(6);">Вес</th>
+    <th id="7" onClick="sort(7);">Кол.</th>
+    <th id="8" onClick="sort(8);">Напр.</th>
+    <th id="9" onClick="sort(9);">Постав.</th>
+    <th>Дата</th>
+  </tr>
+
+<% def toup (str) %>
+   <%  str.gsub!('а','А') %>
+   <%  str.gsub!('б','Б') %>
+   <%  str.gsub!('в','В') %>
+   <% str.gsub!('г','Г') %>
+   <%  str.gsub!('д','Д') %>
+   <%  str.gsub!('е','Е') %>
+   <%  str.gsub!('ж','Ж') %>
+   <%  str.gsub!('з','З') %>
+   <%  str.gsub!('и','И') %>
+   <%  str.gsub!('й','Й') %>
+   <%  str.gsub!('к','К') %>
+   <%  str.gsub!('л','Л') %>
+   <%  str.gsub!('м','М') %>
+   <%  str.gsub!('н','Н') %>
+   <%  str.gsub!('о','О') %>
+   <%  str.gsub!('п','П') %>
+   <%  str.gsub!('р','Р') %>
+   <%  str.gsub!('с','С') %>
+   <%  str.gsub!('т','Т') %>
+   <%  str.gsub!('у','У') %>
+   <%  str.gsub!('ф','Ф') %>
+   <%  str.gsub!('х','Х') %>
+   <%  str.gsub!('ц','Ц') %>
+   <%  str.gsub!('ч','Ч') %>
+   <%  str.gsub!('ш','Ш') %>
+   <%  str.gsub!('щ','Щ') %>
+   <%  str.gsub!('ы','Ы') %>
+   <%  str.gsub!('ь','Ь') %>
+   <%  str.gsub!('э','Э') %>
+   <%  str.gsub!('ю','Ю') %>
+   <%  str.gsub!('я','Я') %>
+   <% return str %>
+  <%  end %>
+
+<% i = 0 %>
+<% @products.each do |productlist| %>
+  <% productlist.each do |product| %> 
+    <tr id = <%= "row" + i.to_s %> >
+      <% i += 1 %>
+      <td><%= product.code %></td>
+      <% if product.id <= -1 %>
+        <%= puts '</tr>' %>
+        <% next %>
+      <% end %>
+      <td><%= Manufacturer.find(product.manufacturer_id).name %></td>
+      <td class="desc"><%= product.description %></td>
+      <td><%= ("%.2f" % (product.price).gsub(',','.') + (product.route == "EU" ? "€" : "$")).gsub!('.', ',') %></td>
+      <% dist = Distributor.where(:id => product.distributor_id).first %>  
+      <% price = dist.formula_price %>
+      <% if dist.formula_price %>
+      <% 
+        if toup(price).index('ЦЕНА') 
+          price = toup(price).gsub("ЦЕНА",product.price) 
+        end
+      %>
+      <% 
+        if toup(price).index('ВЕС') 
+          price = toup(price).gsub("ВЕС",product.weight) 
+        end
+      %>
+      <%Var.all.each do |var| %>
+        <% price = toup(price).gsub(toup(var.name.to_s),var.value.to_s) %>
+      <% end %> 
+      <% price.gsub!(",",".") %> 
+      <% end %>
+      	    <% if price == nil %>
+      	    <% price = '0' %>
+      	    <% end %>
+  	    <% price = eval(price) %>
+        <% 
+          if !price 
+            price = 0.0
+          end
+        %>
+      <% delivery_price = product.route == "EU" ? dist.formula_del_eu : dist.formula_del_uae%>  
+      <% if delivery_price %>
+      <% 
+        if toup(delivery_price).index('ВЕС') 
+          delivery_price = toup(delivery_price).gsub("ВЕС",product.weight)
+        end
+      %>
+      <% 
+        if toup(delivery_price).index('ЦЕНА') 
+          delivery_price = toup(delivery_price).gsub("ЦЕНА",product.price)
+        end
+      %>
+      <%Var.all.each do |var| %>
+        <% delivery_price = toup(delivery_price).gsub(toup(var.name.to_s),var.value.to_s) %>
+      <% end %>
+      <% delivery_price.gsub!(",",".") %> 
+      <% end %>
+     	 <% if delivery_price == nil %>
+      	    <% delivery_price = '0' %>
+      	 <% end %>
+  	<% delivery_price = eval(delivery_price) %>
+        <% 
+          if !delivery_price 
+            delivery_price = 0.0 
+          end
+        %>
+
+      <% if Rg.find(:first, :conditions => ["manufacturer = ? and code = ?", Manufacturer.find(product.manufacturer_id).name, product.rg]) != nil  %>
+      <% delivery_price *= Float(Rg.find(:first, :conditions => ["manufacturer = ? and code = ?", Manufacturer.find(product.manufacturer_id).name, product.rg]).value) %>
+      <% end %>
+      
+
+      
+      <td><%= ("%.2f" % delivery_price).gsub!('.', ',')%></td>
+      <td><%= ("%.2f" % (price + delivery_price)).gsub!('.', ',') %></td>
+      <td class="<%= product.weight.to_f != 0 ? '' : 'red'%>"><%= product.weight.gsub!('.', ',') %></td>
+      <td>
+        <%= 
+          if product.amount == 0
+            '&#8734;'.html_safe
+          else
+            product.amount
+          end
+        %>
+      </td>
+      <td><%= product.route %></td>
+      <td><%= dist.name %></td>
+      <td><%= Manufacturer.find(product.manufacturer_id).last_price_update.strftime("%Y-%m-%d") %></td>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+<script type = "text/javascript">
+String.prototype.replaceAll = function(search, replace){
+  return this.split(search).join(replace);
+}
+function colorfy () {
+  var table = document.getElementById('searchResult').innerHTML;
+  var rowsNumber = table.match(/<tr/g).length;
+  var code = -1;
+  var colour = 1;
+  for (var i = 0; i < rowsNumber - 1; i++) {
+    var bin = document.getElementById('row'+i).innerHTML.indexOf('<td>')+4;
+    var fin = document.getElementById('row'+i).innerHTML.indexOf('</td>');
+    var ccode = document.getElementById('row'+i).innerHTML.substring(bin,fin).replace(/(<([^>]+)>)/ig,'').replaceAll('\n','').replaceAll('\t','').replaceAll(' ','');
+    if (ccode != code) {
+      colour = (colour==1?0:1);
+    }
+    if (colour == 1)
+      document.getElementById('row'+i).style.backgroundColor = 'white'
+    else
+      document.getElementById('row'+i).style.backgroundColor = '#eeeeee'
+    code = ccode;
+  }
+}
+colorfy();
+</script>
+<% else %>
+<h2>Деталь не найдена</h2>
+<% end %>
+
+<%= link_to "Експорт в XLS" ,:action => :download, :file_name => 'exp.xls' %>
+<br />
+
+<script type = "text/javascript">
+var state = 0;
+function sort(column) {
+  var table = document.getElementById('searchResult').innerHTML;
+  var rowsNumber = table.match(/<tr/g).length;
+  var toSort = new Array(0); 
+  var order = new Array(rowsNumber-1); 
+  for (var i = 0; i < rowsNumber - 1; i++) {
+    order[i] = i;
+    var row = document.getElementById('row'+i).innerHTML;
+    var cells = row.split('</td>');
+    for (var j = 0; j < cells.length; j++) {
+      cells[j] = cells[j].replace(/(<([^>]+)>)/ig,'').replaceAll('\n','').replaceAll('\t','').replaceAll(' ','');
+    }
+    toSort.push(cells[column]);
+  }
+  for (var i = 0; i < toSort.length; i++) {
+    for (var j = 0; j < toSort.length - i - 1; j++) {
+      if (isNumber(toSort[j])) {
+        if ( ((state==0)?(parseFloat(toSort[j].replace(',','.').replace('$','')) < 
+                          parseFloat(toSort[j+1].replace(',','.').replace('$','')) ):(parseFloat(toSort[j].replace(',','.').replace('$','')) > 
+                          parseFloat(toSort[j+1].replace(',','.').replace('$','')))) ) {
+          z = toSort[j];
+          toSort[j] = toSort[j+1];
+          toSort[j+1] = z;
+          z1 = order[j];
+          order[j] = order[j+1];
+          order[j+1] = z1;
+        }
+      }
+      else {
+        if ( ((state==0)?(toSort[j] < toSort[j+1]):(toSort[j] > toSort[j+1])) ) {
+          z = toSort[j];  
+          toSort[j] = toSort[j+1];
+          toSort[j+1] = z;
+          z1 = order[j];
+          order[j] = order[j+1];
+          order[j+1] = z1;
+        }
+      }
+    }
+  }
+  //alert(order);
+  s = "<tr id = 'headers'>" + document.getElementById('headers').innerHTML+'</tr>';
+  var ind = 0;
+  for (var i = 0; i < order.length; i++) {
+    s += '<tr id="row'+ind+'">' + document.getElementById("row"+order[i]).innerHTML + "</tr>";
+    ind++;
+  }
+  document.getElementById('searchResult').innerHTML = s;
+  state = state==0?1:0;
+  colorfy();
+}
+
+function isNumber(n) {
+  g = n.replace(',','.').replace('$','');
+  return !isNaN(parseFloat(g)) && isFinite(g);
+}
+
+</script>
